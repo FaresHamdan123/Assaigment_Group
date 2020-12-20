@@ -1,33 +1,34 @@
 package com.example.assaigment_group;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 public class SecoundActivity extends AppCompatActivity {
 
-    private ImageView imageView;
-    private TextView Name;
-    private TextView Edition;
-    private TextView ISBN;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_secound);
-        imageView=findViewById(R.id.image);
-        Name=findViewById(R.id.Name);
-        Edition=findViewById(R.id.Edition);
-        ISBN=findViewById(R.id.ISBN);
+        ImageView imageView = findViewById(R.id.image);
+        TextView name = findViewById(R.id.Name);
+        TextView edition = findViewById(R.id.Edition);
+        TextView ISBN = findViewById(R.id.ISBN);
 
         Bundle extras = getIntent().getExtras();
-        if(extras!=null){
-            Name.setText(extras.getString("Name"));
-            Edition.setText(extras.getString("Edition"));
-            ISBN.setText(extras.getString("ISBN"));
-            imageView.setImageResource(extras.getInt("image"));
+        if (extras != null) {
+            Book book = (Book) getIntent().getSerializableExtra("Book");
+            if (book != null) {
+                name.setText(book.getName());
+                edition.setText(book.getEdition());
+                ISBN.setText(book.getISBN());
+                imageView.setImageResource(book.getImageID());
+            } else {
+                startActivity(new Intent(SecoundActivity.this, MainActivity.class));
+            }
         }
-
     }
 }
